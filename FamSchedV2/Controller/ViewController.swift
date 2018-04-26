@@ -7,14 +7,23 @@
 //
 
 import UIKit
+import RealmSwift
+
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    var schedules = [ScheduleModel]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
+        
+        let nibName = UINib(nibName: "SchedTableViewCell", bundle: nil)
+        tableView.register(nibName, forCellReuseIdentifier: "Cell")
     }
     
     //    MARK:- TableView DataSource Methods
@@ -24,6 +33,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 108
     }
     
     
