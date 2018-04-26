@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import RealmSwift
 
-class ScheduleModel {
-    var memberName : String = ""
-    var whatDate : Date?
-    var famThings : String = ""
+class ScheduleModel:Object {
+    @objc dynamic var memberName : String = ""
+    @objc dynamic var whatDate : String = ""
+    @objc dynamic var famThings : String = ""
 }
