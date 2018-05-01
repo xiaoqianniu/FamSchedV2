@@ -18,6 +18,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     let realm = try! Realm()
     
+    var p = 0
+    
+    //            create date picker
+    let picker = UIDatePicker()
+//    var dateTextField = UITextField()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -50,8 +56,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     
-
+    // MARK: SegmentControl
     @IBAction func segmentSchedule(_ sender: UISegmentedControl) {
+        p = sender.selectedSegmentIndex
+        tableView.reloadData()
     }
     
 
@@ -81,6 +89,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
         alert.addTextField { (time) in
             time.placeholder = "    What time?"
+           
+            self.createDatePicker(dateTextField: time)
+
+
+            
            timeTextField = time
         }
         alert.addTextField { (things) in
@@ -112,5 +125,30 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         schedules = realm.objects(ScheduleModel.self)
         tableView.reloadData()
     }
+    
+    func createDatePicker(dateTextField:UITextField){
+        //toolbar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        //done button for toolbar
+        let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
+        toolbar.setItems([done], animated: false)
+        dateTextField.inputAccessoryView = toolbar
+        dateTextField.inputView = picker
+        //time formatter pick
+          picker.datePickerMode = .dateAndTime
+    }
+    
+    @objc func donePressed(dateTextField:UITextField){
+        let formatter = DateFormatter()
+        formatter.dateStyle = .full
+        formatter.timeStyle = .medium
+        let dateString = formatter.string(from: picker.date)
+        dateTextField.text = "\(dateString)"
+        self.view.endEditing(true)
+         
+    }
+    
+
 }
 

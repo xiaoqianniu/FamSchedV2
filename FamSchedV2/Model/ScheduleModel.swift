@@ -13,4 +13,5 @@ class ScheduleModel:Object {
     @objc dynamic var memberName : String = ""
     @objc dynamic var whatDate : String = ""
     @objc dynamic var famThings : String = ""
+    @objc dynamic var location : String = ""
 }
